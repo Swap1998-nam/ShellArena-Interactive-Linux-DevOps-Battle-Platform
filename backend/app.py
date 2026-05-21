@@ -8,12 +8,13 @@ app = Flask(__name__)
 
 socketio = SocketIO(
     app,
-    cors_allowed_origins="*"
+    cors_allowed_origins="*",
+    async_mode='eventlet'
 )
 
 
-@app.route('/')
-def home():
+@app.route("/")
+def health():
 
     return {
 
@@ -24,28 +25,24 @@ def home():
     }
 
 
-@socketio.on('terminal_input')
-def handle_terminal(data):
+@socketio.on("terminal_input")
+def terminal(data):
 
     try:
 
         cmd = data.get(
-            'command',
-            ''
+            "command",
+            ""
         ).strip()
 
         if not cmd:
 
             emit(
-                'terminal_output',
+                "terminal_output",
                 {
-
-                'output':
-
-                'No command entered'
-
+                    "output":
+                    "No command"
                 }
-
             )
 
             return
@@ -62,7 +59,7 @@ def handle_terminal(data):
 
             output += (
 
-            f"\n\n🏆 Challenge Complete"
+            "\n🏆 Challenge Complete"
 
             f"\n+{xp} XP"
 
@@ -70,15 +67,15 @@ def handle_terminal(data):
 
         emit(
 
-        'terminal_output',
+            "terminal_output",
 
-        {
+            {
 
-        'output':
+            "output":
 
-        output
+            output
 
-        }
+            }
 
         )
 
@@ -86,15 +83,15 @@ def handle_terminal(data):
 
         emit(
 
-        'terminal_output',
+            "terminal_output",
 
-        {
+            {
 
-        'output':
+            "output":
 
-        str(e)
+            str(e)
 
-        }
+            }
 
         )
 
@@ -103,12 +100,10 @@ if __name__=="__main__":
 
     socketio.run(
 
-    app,
+        app,
 
-    host="0.0.0.0",
+        host="0.0.0.0",
 
-    port=5000,
+        port=5000
 
-    debug=True
-
-)
+    )
