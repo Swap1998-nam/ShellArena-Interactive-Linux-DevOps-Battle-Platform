@@ -1,35 +1,33 @@
-const socket = io(
+const socket =
+io(
 "http://localhost:5000"
 )
 
 const terminal =
 new Terminal({
 
-cursorBlink:true,
-
-theme:{
-
-background:"#000000",
-
-foreground:"#00ff99"
-
-}
+cursorBlink:true
 
 })
 
 terminal.open(
 
-document.getElementById(
+document
+.getElementById(
 'terminal'
 )
 
 )
 
 terminal.write(
+
 'Welcome To ShellArena\r\n'
+
 )
 
-terminal.write('$ ')
+terminal.write(
+'$ '
+)
 
 let command=''
 
@@ -37,9 +35,13 @@ terminal.onData(
 
 (data)=>{
 
-if(data==='\r'){
+if(
+data==='\r'
+){
 
-terminal.write('\r\n')
+terminal.write(
+'\r\n'
+)
 
 socket.emit(
 
@@ -47,7 +49,7 @@ socket.emit(
 
 {
 
-command:command
+command
 
 }
 
@@ -58,7 +60,9 @@ command=''
 }
 
 else if(
+
 data==='\u007F'
+
 ){
 
 if(
@@ -72,9 +76,7 @@ command.slice(
 )
 
 terminal.write(
-
 '\b \b'
-
 )
 
 }

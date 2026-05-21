@@ -2,37 +2,49 @@ CHALLENGES = [
 
 {
 
-"id":1,
+"title":
 
-"title":"Find Current Directory",
+"Current Directory",
 
-"answer":"pwd",
+"answer":
 
-"xp":50
+"pwd",
 
-},
+"xp":
 
-{
-
-"id":2,
-
-"title":"Check Disk Usage",
-
-"answer":"df -h",
-
-"xp":100
+50
 
 },
 
 {
 
-"id":3,
+"title":
 
-"title":"Current User",
+"Current User",
 
-"answer":"whoami",
+"answer":
 
-"xp":50
+"whoami",
+
+"xp":
+
+50
+
+},
+
+{
+
+"title":
+
+"Disk Usage",
+
+"answer":
+
+"df -h",
+
+"xp":
+
+100
 
 }
 
@@ -43,13 +55,21 @@ def validate(command):
 
     for challenge in CHALLENGES:
 
-        if command.strip() == challenge['answer']:
+        if (
+
+        command.strip()
+
+        ==
+
+        challenge['answer']
+
+        ):
 
             return (
 
-                True,
+            True,
 
-                challenge['xp']
+            challenge['xp']
 
             )
 

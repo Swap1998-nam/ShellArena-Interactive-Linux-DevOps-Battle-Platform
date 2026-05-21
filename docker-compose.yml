@@ -4,11 +4,10 @@ services:
 
   backend:
 
-    build:
+    build: ./backend
 
-      context: ./backend
-
-    container_name: shellarena_backend
+    container_name:
+      shellarena_backend
 
     ports:
 
@@ -20,22 +19,12 @@ services:
 
       - /var/run/docker.sock:/var/run/docker.sock
 
-    restart: unless-stopped
-
-    environment:
-
-      - PYTHONUNBUFFERED=1
-
-    networks:
-
-      - shellarena_network
-
-
   frontend:
 
     image: nginx:alpine
 
-    container_name: shellarena_frontend
+    container_name:
+      shellarena_frontend
 
     ports:
 
@@ -48,16 +37,3 @@ services:
     depends_on:
 
       - backend
-
-    restart: unless-stopped
-
-    networks:
-
-      - shellarena_network
-
-
-networks:
-
-  shellarena_network:
-
-    driver: bridge
