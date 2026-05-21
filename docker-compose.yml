@@ -1,15 +1,63 @@
-version: '3'
+version: "3.9"
 
 services:
 
   backend:
-    build: ./backend
+
+    build:
+
+      context: ./backend
+
+    container_name: shellarena_backend
+
     ports:
+
       - "5000:5000"
 
+    volumes:
+
+      - ./backend:/app
+
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    restart: unless-stopped
+
+    environment:
+
+      - PYTHONUNBUFFERED=1
+
+    networks:
+
+      - shellarena_network
+
+
   frontend:
-    build: ./frontend
+
+    image: nginx:alpine
+
+    container_name: shellarena_frontend
+
     ports:
+
       - "3000:80"
+
+    volumes:
+
+      - ./frontend:/usr/share/nginx/html
+
     depends_on:
+
       - backend
+
+    restart: unless-stopped
+
+    networks:
+
+      - shellarena_network
+
+
+networks:
+
+  shellarena_network:
+
+    driver: bridge
