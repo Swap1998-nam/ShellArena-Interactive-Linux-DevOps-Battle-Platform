@@ -38,6 +38,7 @@ CHALLENGES = [
 
 ]
 
+
 def validate(command):
 
     for challenge in CHALLENGES:

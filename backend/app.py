@@ -1,5 +1,5 @@
-from flask import Flask
 from challenges import validate
+from flask import Flask
 from flask_socketio import SocketIO, emit
 
 from docker_manager import execute_command
@@ -39,18 +39,17 @@ def handle(data):
             return
 
         output = execute_command(cmd)
-
         success,xp = validate(cmd)
 
         if success:
 
-         output += (
+          output += (
 
-         f"\n\n🏆 Challenge Completed"
+          f"\n\n🏆 Challenge Completed"
 
-         f"\n+{xp} XP"
+          f"\n+{xp} XP"
 
-        )
+          )
 
         emit(
             'terminal_output',
@@ -75,5 +74,5 @@ if __name__ == "__main__":
         app,
         host="0.0.0.0",
         port=5000,
-        debug=True
+        debug=Trues
     )
