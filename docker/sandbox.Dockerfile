@@ -1,9 +1,12 @@
 FROM ubuntu:22.04
 
-RUN apt-get update && apt-get install -y \
-    curl \
-    vim \
-    nano \
-    htop
+RUN apt update
+
+RUN apt install -y \
+curl \
+nano \
+vim \
+net-tools \
+htop
 
 CMD ["/bin/bash"]
