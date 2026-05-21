@@ -1,71 +1,238 @@
 body{
 
-background:#0d1117;
+margin:0;
 
-color:#00ff99;
+padding:0;
 
-font-family:monospace;
+background:#030712;
 
-padding:20px;
+font-family:
+
+'Segoe UI',
+
+sans-serif;
+
+color:white;
+
+overflow:hidden;
 
 }
 
-h1{
+.header{
 
-color:#58a6ff;
+height:70px;
 
-text-align:center;
+background:
+
+linear-gradient(
+90deg,
+#0f172a,
+#111827
+);
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:0 30px;
+
+border-bottom:
+
+1px solid #1e293b;
+
+box-shadow:
+
+0 0 20px rgba(
+0,
+255,
+170,
+0.15
+);
+
+}
+
+.logo{
+
+font-size:28px;
+
+font-weight:700;
+
+color:#22c55e;
+
+}
+
+.status{
+
+background:#052e16;
+
+padding:8px 16px;
+
+border-radius:20px;
+
+color:#4ade80;
+
+font-size:14px;
+
+}
+
+.main{
+
+display:flex;
+
+height:calc(
+100vh - 70px
+);
+
+}
+
+.sidebar{
+
+width:260px;
+
+background:#0f172a;
+
+border-right:
+
+1px solid #1e293b;
+
+padding:25px;
+
+}
+
+.menu{
+
+padding:15px;
+
+margin-bottom:10px;
+
+background:#111827;
+
+border-radius:10px;
+
+cursor:pointer;
+
+transition:0.3s;
+
+}
+
+.menu:hover{
+
+background:#1e293b;
+
+transform:
+
+translateX(5px);
+
+}
+
+.content{
+
+flex:1;
+
+padding:30px;
+
+display:flex;
+
+flex-direction:column;
+
+}
+
+.card{
+
+background:#111827;
+
+border:
+
+1px solid #1f2937;
+
+border-radius:14px;
+
+padding:15px;
+
+margin-bottom:20px;
+
+box-shadow:
+
+0 0 20px rgba(
+0,
+255,
+170,
+0.08
+);
 
 }
 
 #terminal{
 
-width:90%;
+flex:1;
 
-height:500px;
+background:#000;
 
-margin:auto;
+border-radius:12px;
 
-border:2px solid #30363d;
+padding:15px;
 
-padding:10px;
+border:
 
-background:black;
+1px solid #00ff99;
 
 box-shadow:
 
-0 0 20px #00ff99;
+0 0 25px rgba(
+0,
+255,
+170,
+0.4
+);
 
 overflow:auto;
 
 }
 
-.xterm{
+.stats{
 
-padding:10px;
+display:flex;
 
-}
+gap:20px;
 
-button{
-
-background:#238636;
-
-border:none;
-
-padding:10px 20px;
-
-color:white;
-
-font-size:16px;
-
-border-radius:8px;
-
-cursor:pointer;
+margin-bottom:20px;
 
 }
 
-button:hover{
+.stat-box{
 
-background:#2ea043;
+flex:1;
+
+background:#111827;
+
+padding:20px;
+
+border-radius:12px;
+
+text-align:center;
+
+border:
+
+1px solid #1f2937;
+
+}
+
+.value{
+
+font-size:32px;
+
+font-weight:bold;
+
+color:#22c55e;
+
+}
+
+.label{
+
+color:#94a3b8;
+
+margin-top:10px;
 
 }
