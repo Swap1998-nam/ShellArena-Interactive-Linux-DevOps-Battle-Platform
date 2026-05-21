@@ -1,67 +1,66 @@
 from flask import Flask
+from flask_socketio import SocketIO, emit
 
-from flask_socketio import (
-SocketIO,
-emit
+from docker_manager import execute_command
+
+app = Flask(__name__)
+
+socketio = SocketIO(
+    app,
+    cors_allowed_origins="*"
 )
 
-from docker_manager import (
-execute_command
-)
-
-app=Flask(__name__)
-
-socketio=SocketIO(
-app,
-cors_allowed_origins="*"
-)
 
 @app.route('/')
-
 def health():
 
     return {
-
-    "status":
-
-    "ShellArena Running"
-
+        "status": "ShellArena Running 🚀"
     }
 
-@socketio.on(
-'terminal_input'
-)
 
-def handle(
-data
-):
+@socketio.on('terminal_input')
+def handle(data):
 
-    cmd=data['command']
+    try:
 
-    output=execute_command(cmd)
+        cmd = data.get('command', '').strip()
 
-    emit(
+        if not cmd:
 
-    'terminal_output',
+            emit(
+                'terminal_output',
+                {
+                    'output': 'No command entered'
+                }
+            )
 
-    {
+            return
 
-    'output':
+        output = execute_command(cmd)
 
-    output
+        emit(
+            'terminal_output',
+            {
+                'output': output
+            }
+        )
 
-    }
+    except Exception as e:
 
-    )
+        emit(
+            'terminal_output',
+            {
+                'output': f'Error: {str(e)}'
+            }
+        )
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
 
     socketio.run(
-
-    app,
-
-    host="0.0.0.0",
-
-    port=5000
-
-)
+        app,
+        host="0.0.0.0",
+        port=5000,
+        debug=True
+    )
