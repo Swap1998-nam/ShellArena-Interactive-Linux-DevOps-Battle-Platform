@@ -1,0 +1,27 @@
+# Requires an existing ingress-nginx controller and a provisioned TLS Secret.
+# An AWS ALB ingress uses different annotations and networking; see deployment guide.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: shellarena
+  namespace: shellarena
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+    nginx.ingress.kubernetes.io/proxy-body-size: 8k
+    nginx.ingress.kubernetes.io/limit-rps: '5'
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts: [shellarena.example.com]
+      secretName: shellarena-tls
+  rules:
+    - host: shellarena.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: shellarena
+                port:
+                  number: 80

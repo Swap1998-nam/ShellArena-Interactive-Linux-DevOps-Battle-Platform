@@ -1,7 +1,9 @@
 {
   "name": "shellarena-frontend",
-  "version": "1.0.0",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Dependency-free, same-origin ShellArena web client",
   "scripts": {
-    "start": "echo Frontend Placeholder"
+    "check": "node --check app.js"
   }
 }

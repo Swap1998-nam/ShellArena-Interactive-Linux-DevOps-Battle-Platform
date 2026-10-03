@@ -1,0 +1,11 @@
+groups:
+  - name: shellarena
+    rules:
+      - alert: ShellArenaUnavailable
+        expr: up{job="shellarena"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: ShellArena metrics endpoint is unavailable
+          description: Check app readiness, database volume, and the metrics bearer token.

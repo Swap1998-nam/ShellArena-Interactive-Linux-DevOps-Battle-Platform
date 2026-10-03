@@ -1,0 +1,74 @@
+name: ShellArena DevSecOps
+on:
+  pull_request:
+  push:
+    branches: [main, master, 'feat/**']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: python -m pip install -r requirements-dev.txt
+      - run: ruff check backend tests scripts
+      - run: node --check frontend/app.js
+      - run: pytest --cov=backend --cov-fail-under=88 --cov-report=xml --junitxml=reports/pytest.xml
+      - run: bandit -q -r backend -ll
+      - run: pip-audit -r backend/requirements.txt
+      - name: Install browser test dependencies
+        run: npm ci --ignore-scripts
+      - run: npx playwright install --with-deps chromium
+      - name: Test browser workflows and mobile layout
+        run: node tests/browser.cjs
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: quality-reports
+          path: |
+            coverage.xml
+            reports/
+            test-results/
+  container-security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - run: docker build --pull -t shellarena:${{ github.sha }} .
+      - name: Scan source for secrets and configuration issues
+        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # 0.35.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: misconfig,secret
+          severity: HIGH,CRITICAL
+          exit-code: '1'
+      - name: Gate on high and critical image vulnerabilities
+        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # 0.35.0
+        with:
+          image-ref: shellarena:${{ github.sha }}
+          severity: HIGH,CRITICAL
+          exit-code: '1'
+      - name: Generate CycloneDX image SBOM
+        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # 0.35.0
+        with:
+          image-ref: shellarena:${{ github.sha }}
+          format: cyclonedx
+          output: sbom.cdx.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: image-sbom
+          path: sbom.cdx.json

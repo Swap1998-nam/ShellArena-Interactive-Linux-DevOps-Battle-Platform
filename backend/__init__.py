@@ -1,0 +1,1 @@
+"""ShellArena application package."""

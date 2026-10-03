@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "checks": [
+    "Dashboard renders and does not overflow",
+    "Search, category, difficulty, and bookmarks work",
+    "Terminal completes objectives and awards XP",
+    "History survives a refresh and output is escaped",
+    "Guest upgrades to an account without losing XP",
+    "Leaderboard is opt in and profile preferences persist",
+    "Sign out and sign back in restores account progress",
+    "Hints and workspace reset work",
+    "Mobile navigation and layout work at 390px",
+    "No uncaught browser errors or CSP violations"
+  ],
+  "failures": []
+}

@@ -1,0 +1,7 @@
+# Requires an HTTPS reverse proxy on the same host. Keep port 3000 loopback-only.
+services:
+  app:
+    environment:
+      APP_ENV: production
+      TRUSTED_HOSTS: ${APP_DOMAIN:?Set APP_DOMAIN in .env},localhost,127.0.0.1
+      PUBLIC_ORIGIN: https://${APP_DOMAIN}

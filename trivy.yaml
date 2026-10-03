@@ -1,0 +1,8 @@
+# Generated environments and local state are not part of the release source.
+skip-dirs:
+  - .git
+  - .venv
+  - node_modules
+  - data
+  - test-results
+  - reports

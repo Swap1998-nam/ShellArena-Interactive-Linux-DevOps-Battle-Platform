@@ -1,0 +1,15 @@
+{
+  "name": "shellarena-checks",
+  "private": true,
+  "version": "2.0.0",
+  "description": "Browser verification only; the application has no runtime npm dependencies",
+  "scripts": {
+    "test:browser": "node tests/browser.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
